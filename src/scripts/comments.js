@@ -8,7 +8,9 @@ export const comments = () => {
   });
 };
 
-const sliceArr = (comments, index) => comments.slice(0, index);
+let arrNewComments = []
+
+const sliceArr = (comments, index) => arrNewComments = comments.slice(0, index);
 const list = document.querySelector(".wrap");
 
 const showComments = (comments) => {
@@ -19,7 +21,7 @@ const showComments = (comments) => {
 };
 
 const input = document.querySelector('.button-input')
-let arrNewComments = []
+
 
 input.addEventListener('click', (evt) => {
   evt.preventDefault()
