@@ -2,15 +2,17 @@ import $ from "jquery";
 import { getComments } from "./services/getComments";
 import { newComment } from "./newComment";
 
+let arrNewComments = []
+
 export const comments = () => {
   getComments().then((data) => {
     showComments(sliceArr(data, 10));
+    arrNewComments = sliceArr(data, 10)
   });
 };
 
-let arrNewComments = []
+const sliceArr = (comments, index) => comments.slice(0, index);
 
-const sliceArr = (comments, index) => arrNewComments = comments.slice(0, index);
 const list = document.querySelector(".wrap");
 
 const showComments = (comments) => {
