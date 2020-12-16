@@ -1,4 +1,4 @@
-export const newComment = (email, body) => {
+export const newComment = (email, body, id) => {
   return `
         <div class="media">   
             <a class="pull-left" href="#">
@@ -12,7 +12,7 @@ export const newComment = (email, body) => {
                       <li class="like-count"><i class="fa fa-thumbs-up"></i>0</li> 
                     </ul>
                     <ul class="list-unstyled list-inline media-detail pull-right">
-                       <li><a href="" class="like">Like</a></li>
+                       <li><a href="" class="like" data-id="${id}">Like</a></li>
                        <li class=""><a href="">Reply</a></li>
                     </ul>
                 </div>

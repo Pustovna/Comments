@@ -7,6 +7,7 @@ let arrNewComments = [];
 export const comments = () => {
   getComments().then((data) => {
     arrNewComments = sliceArr(data, 10);
+    arrNewComments = arrNewComments.reverse()
     showComments(arrNewComments);
   });
 };
@@ -17,8 +18,8 @@ const list = document.querySelector(".wrap");
 
 const showComments = (comments) => {
   console.debug($("body"));
-  comments.forEach(({ email, body }) => {
-    list.insertAdjacentHTML("beforeend", newComment(email, body));
+  comments.forEach(({ email, body, id }) => {
+    list.insertAdjacentHTML("beforeend", newComment(email, body, id));
   });
 };
 
@@ -28,9 +29,16 @@ input.addEventListener("click", (evt) => {
   evt.preventDefault();
   let formInput = document.querySelector(".form-control");
   if (formInput.value.trim() !== "") {
-    let object = { body: formInput.value.trim() };
+    let object = {
+      body: formInput.value.trim(),
+      id: arrNewComments.length + 1,
+    };
     arrNewComments.unshift(object);
-    list.insertAdjacentHTML("afterBegin", newComment("???", formInput.value));
+    list.insertAdjacentHTML(
+      "afterBegin",
+      newComment("???", formInput.value, object.id)
+    );
+    console.log(arrNewComments)
   }
   formInput.value = "";
 });
@@ -40,12 +48,12 @@ document.addEventListener("click", function (e) {
     e.preventDefault();
     let likeList = document.querySelectorAll(".like");
     let likeCount = document.querySelectorAll(".like-count");
-    for (let i = 0; i < likeList.length; i++) {
-      if (likeList[i] === e.target) {
-        arrNewComments[i].like = !arrNewComments[i].like;
-        console.log(arrNewComments[i].like);
-        likeCount[i].lastChild.textContent = +arrNewComments[i].like;
-      }
-    }
+    let i = arrNewComments.length - e.path[0].dataset.id
+    arrNewComments[i].like = !arrNewComments[i].like;
+    likeCount[i].lastChild.textContent = +arrNewComments[i].like;
+    if (likeList[i].textContent === "Like") {
+      likeList[i].textContent = "Dislike";
+    } else {
+      likeList[i].textContent = "Like";
   }
-});
+}});
