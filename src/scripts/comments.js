@@ -46,17 +46,16 @@ input.addEventListener("click", (evt) => {
 document.addEventListener("click", function (e) {
   if (e.target && e.target.classList == "like") {
     e.preventDefault();
-    let targetElem = e.target;
-    let parent = targetElem.closest('.media-body');
-    const likeCount = parent.querySelector(".like-count");
-    const commentIndex = arrNewComments.length - e.target.dataset.id;
-    arrNewComments[commentIndex].like = !arrNewComments[commentIndex].like;
-    liker(targetElem, likeCount, commentIndex);
+    liker(e.target);
   }
 });
 
-const liker = (targetElem, countElem, index) => {
-  countElem.lastChild.textContent = +arrNewComments[index].like;
+const liker = (targetElem) => {
+  const parent = targetElem.closest('.media-body');
+  let likeCount = parent.querySelector(".like-count");
+  const commentIndex = arrNewComments.length - targetElem.dataset.id;
+  arrNewComments[commentIndex].like = !arrNewComments[commentIndex].like;
+  likeCount.lastChild.textContent = +arrNewComments[commentIndex].like;
   if (targetElem.textContent === "Like") {
     targetElem.textContent = "Dislike";
   } else {
