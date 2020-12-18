@@ -46,14 +46,12 @@ input.addEventListener("click", (evt) => {
 document.addEventListener("click", function (e) {
   if (e.target && e.target.classList == "like") {
     e.preventDefault();
-    let parent = e.target;
-    while (!parent.classList.contains("media-body")) {
-      parent = parent.parentNode;
-    }
+    let targetElem = e.target;
+    let parent = targetElem.closest('.media-body');
     const likeCount = parent.querySelector(".like-count");
     const commentIndex = arrNewComments.length - e.target.dataset.id;
     arrNewComments[commentIndex].like = !arrNewComments[commentIndex].like;
-    liker(e.target, likeCount, commentIndex);
+    liker(targetElem, likeCount, commentIndex);
   }
 });
 
