@@ -9,7 +9,7 @@ export const newComment = (email, body, id) => {
                     <p>${body}</p>
                     <ul class="list-unstyled list-inline media-detail pull-left">
                       <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                      <li class="like-count"><i class="fa fa-thumbs-up"></i>0</li> 
+                      <li><i class="fa fa-thumbs-up"></i><span class="like-count">0</span></li> 
                     </ul>
                     <ul class="list-unstyled list-inline media-detail pull-right">
                        <li><a href="" class="like" data-id="${id}">Like</a></li>

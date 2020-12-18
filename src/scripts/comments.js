@@ -18,8 +18,9 @@ const list = document.querySelector(".wrap");
 
 const showComments = (comments) => {
   console.debug($("body"));
-  comments.forEach(({ email, body, id }) => {
+  comments.forEach(({ email, body, id }, index) => {
     list.insertAdjacentHTML("beforeend", newComment(email, body, id));
+    comments[index].likeAmount = 0
   });
 };
 
@@ -32,13 +33,13 @@ input.addEventListener("click", (evt) => {
     let object = {
       body: formInput.value.trim(),
       id: arrNewComments.length + 1,
+      likeAmount: 0,
     };
     arrNewComments.unshift(object);
     list.insertAdjacentHTML(
       "afterBegin",
       newComment("???", formInput.value, object.id)
     );
-    console.log(arrNewComments);
   }
   formInput.value = "";
 });
@@ -55,10 +56,12 @@ const liker = (targetElem) => {
   let likeCount = parent.querySelector(".like-count");
   const commentIndex = arrNewComments.length - targetElem.dataset.id;
   arrNewComments[commentIndex].like = !arrNewComments[commentIndex].like;
-  likeCount.lastChild.textContent = +arrNewComments[commentIndex].like;
-  if (targetElem.textContent === "Like") {
+  if (arrNewComments[commentIndex].like) {
     targetElem.textContent = "Dislike";
+    arrNewComments[commentIndex].likeAmount += 1
   } else {
     targetElem.textContent = "Like";
+    arrNewComments[commentIndex].likeAmount -= 1
   }
+  likeCount.textContent = arrNewComments[commentIndex].likeAmount;
 };
