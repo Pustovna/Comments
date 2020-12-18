@@ -7,7 +7,7 @@ let arrNewComments = [];
 export const comments = () => {
   getComments().then((data) => {
     arrNewComments = sliceArr(data, 10);
-    arrNewComments = arrNewComments.reverse()
+    arrNewComments = arrNewComments.reverse();
     showComments(arrNewComments);
   });
 };
@@ -38,7 +38,7 @@ input.addEventListener("click", (evt) => {
       "afterBegin",
       newComment("???", formInput.value, object.id)
     );
-    console.log(arrNewComments)
+    console.log(arrNewComments);
   }
   formInput.value = "";
 });
@@ -46,14 +46,22 @@ input.addEventListener("click", (evt) => {
 document.addEventListener("click", function (e) {
   if (e.target && e.target.classList == "like") {
     e.preventDefault();
-    let likeList = document.querySelectorAll(".like");
-    let likeCount = document.querySelectorAll(".like-count");
-    let i = arrNewComments.length - e.path[0].dataset.id
-    arrNewComments[i].like = !arrNewComments[i].like;
-    likeCount[i].lastChild.textContent = +arrNewComments[i].like;
-    if (likeList[i].textContent === "Like") {
-      likeList[i].textContent = "Dislike";
-    } else {
-      likeList[i].textContent = "Like";
+    let parent = e.target;
+    while (!parent.classList.contains("media-body")) {
+      parent = parent.parentNode;
+    }
+    const likeCount = parent.querySelector(".like-count");
+    const commentIndex = arrNewComments.length - e.target.dataset.id;
+    arrNewComments[commentIndex].like = !arrNewComments[commentIndex].like;
+    liker(e.target, likeCount, commentIndex);
   }
-}});
+});
+
+const liker = (targetElem, countElem, index) => {
+  countElem.lastChild.textContent = +arrNewComments[index].like;
+  if (targetElem.textContent === "Like") {
+    targetElem.textContent = "Dislike";
+  } else {
+    targetElem.textContent = "Like";
+  }
+};
