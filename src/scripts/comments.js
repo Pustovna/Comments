@@ -18,9 +18,9 @@ const list = document.querySelector(".wrap");
 
 const showComments = (comments) => {
   console.debug($("body"));
-  comments.forEach(({ email, body, id }, index) => {
-    list.insertAdjacentHTML("beforeend", newComment(email, body, id));
-    comments[index].likeAmount = 0
+  comments.forEach(({ email, body, id, likeAmount = 0 }, index) => {
+    list.insertAdjacentHTML("beforeend", newComment(email, body, id, likeAmount));
+    comments[index].likeAmount = likeAmount
   });
 };
 
@@ -38,7 +38,7 @@ input.addEventListener("click", (evt) => {
     arrNewComments.unshift(object);
     list.insertAdjacentHTML(
       "afterBegin",
-      newComment("???", formInput.value, object.id)
+      newComment("???", formInput.value, object.id, object.likeAmount)
     );
   }
   formInput.value = "";
